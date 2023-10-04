@@ -7,17 +7,21 @@ export const checkout = async (req, res) => {
     amount : Number(req.body.amount * 100),
     currency: "INR",
   };
+  // console.log("options is ",options);
   try{
       const order = await instance.orders.create(options);
       // console.log("order is ",order);
+      // res.status(200).json({
+      //   success: true,
+      //   order,
+      // });
       res.status(200).json({
-        success: true,
-        order,
-      });
+        success:true,
+        order
+      })
   }
   catch(err){
-    console.log("error is : ",err
-    );
+    console.log("error is : ",err);
     res.status(500).json({message:err.message});
   }
 };
@@ -44,9 +48,11 @@ export const paymentVerification = async (req, res) => {
       razorpay_signature,
     });
 
-    res.redirect(
-      `${process.env.CLIENT_URL}/paymentsuccess?reference=${razorpay_payment_id}`
-    );
+    
+    // res.redirect(
+    //   `${process.env.CLIENT_URL}/paymentsuccess?reference=${razorpay_payment_id}`
+    // );
+    res.status(200).json({message :" you paid successfully"});
   } else {
     res.status(400).json({
       success: false,
